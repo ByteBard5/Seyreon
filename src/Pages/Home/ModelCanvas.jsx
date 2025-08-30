@@ -7,18 +7,56 @@ import * as THREE from "three";
 const Model = () => {
   const gltf = useGLTF("/Robot.glb");
   const robotRef = useRef();
-  const targetEmpty = useRef();
-  const rotatingEdges = useRef();
+  const eyesRef = useRef([]);
+  const edgesRef = useRef(); // ✅ edges container
   const mousePosition = useRef(new THREE.Vector2(0, 0));
-  const { size } = useThree();
+  const { size, camera } = useThree();
 
-  // Debug log once
+  // Debug + find eyes and edges + apply colors
   useEffect(() => {
     if (gltf?.scene) {
       console.log("GLB Scene Graph:");
-      gltf.scene.traverse((child) => console.log(child.name));
-      targetEmpty.current = gltf.scene.getObjectByName("Empty");
-      rotatingEdges.current = gltf.scene.getObjectByName("CubeEdges");
+      gltf.scene.traverse((child) => {
+        console.log(child.name);
+
+        if (child.isMesh) {
+          child.material = child.material.clone(); // prevent shared material edits
+        }
+
+        // Body (Mesh005, Mesh005_1)
+        if (
+          child.isMesh &&
+          (child.name === "Mesh005" || child.name === "Mesh005_1")
+        ) {
+          child.material.color = new THREE.Color("#1565C0"); // deep bluish
+        }
+
+        // Eyes (EyeBall, eyes)
+        if (
+          child.isMesh &&
+          (child.name === "EyeBall" || child.name === "eyes")
+        ) {
+          child.material.color = new THREE.Color("#ffffff"); // white base
+          child.material.emissive = new THREE.Color("#00eaff"); // cyan glow
+          child.material.emissiveIntensity = 1.5;
+        }
+
+        // Halo (jail)
+        if (child.isMesh && child.name === "jail") {
+          child.material.color = new THREE.Color("#9333ea"); // purple neon
+          child.material.emissive = new THREE.Color("#3b82f6"); // blue glow
+          child.material.emissiveIntensity = 3.0;
+        }
+      });
+
+      // collect possible eyes
+      const candidates = ["EyeBall", "eyes"];
+      eyesRef.current = candidates
+        .map((name) => gltf.scene.getObjectByName(name))
+        .filter(Boolean);
+
+      // halo edges
+      edgesRef.current = gltf.scene.getObjectByName("jail");
     }
   }, [gltf]);
 
@@ -34,21 +72,22 @@ const Model = () => {
 
   // Animations
   useFrame(() => {
-    if (robotRef.current) {
-      robotRef.current.rotation.y = mousePosition.current.x * 0.5;
-      robotRef.current.rotation.x = -mousePosition.current.y * 0.3;
-    }
-    if (targetEmpty.current) {
-      const targetPos = new THREE.Vector3(
-        mousePosition.current.x * 2,
-        mousePosition.current.y * 2,
-        0
+    // make only eyes follow cursor
+    if (eyesRef.current.length > 0) {
+      const vector = new THREE.Vector3(
+        mousePosition.current.x * 28,
+        mousePosition.current.y * 28,
+        0.5
       );
-      targetEmpty.current.position.lerp(targetPos, 0.1);
+      vector.unproject(camera);
+      eyesRef.current.forEach((eye) => {
+        eye.lookAt(vector);
+      });
     }
-    if (rotatingEdges.current) {
-      rotatingEdges.current.rotation.y += 0.003;
-      rotatingEdges.current.rotation.x += 0.002;
+
+    // ✅ rotate edges in a smooth flat spin (halo effect)
+    if (edgesRef.current) {
+      edgesRef.current.rotation.y += 0.03;
     }
   });
 
@@ -56,8 +95,8 @@ const Model = () => {
     <primitive
       ref={robotRef}
       object={gltf.scene}
-      scale={1.3} // ✅ increased size
-      position={[0, -0.2, 0]}
+      scale={1.2}
+      position={[1.5, 0, 0]}
     />
   );
 };
@@ -68,15 +107,9 @@ const ModelCanvas = () => {
       camera={{ position: [0, 0, 5], fov: 45 }}
       gl={{ alpha: true }}
       style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
         width: "100%",
         height: "100%",
         background: "transparent",
-        pointerEvents: "none",
-        zIndex: 0, // ✅ behind text & buttons
-        mixBlendMode: "lighten", // ✅ blend with gradient
       }}
     >
       {/* Lights */}

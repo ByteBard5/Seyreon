@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ModelCanvas from "./ModelCanvas"; // adjust the path if ModelCanvas is in a different folder
+import ModelCanvas from "./ModelCanvas";
 
 const HomeHero = () => {
   return (
-    <div className="-mt-[100px] text-white bg-gradient-to-br from-[#0d0d14] via-[#13131d] to-[#1b1b29]">
+    <div className="-mt-[100px] text-white bg-gradient-to-br from-[#0d0d14] via-[#13131d] to-[#1b1b29] relative overflow-hidden">
       {/* Load Orbitron font */}
       <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap"
@@ -54,6 +54,11 @@ const HomeHero = () => {
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#1b1b29] z-0 pointer-events-none"></div>
         </div>
 
+        {/* FULLSCREEN 3D MODEL in background */}
+        <div className="absolute inset-0 z-0">
+          <ModelCanvas />
+        </div>
+
         {/* Left Content */}
         <div className="relative z-10 w-full md:w-1/2 text-left pl-4 md:pl-12 lg:pl-20">
           <h1 className="text-5xl md:text-8xl font-extrabold leading-tight mb-6 neon-text">
@@ -68,13 +73,6 @@ const HomeHero = () => {
               Let’s Build Yours →
             </button>
           </Link>
-        </div>
-
-        {/* Right Side 3D Model */}
-        <div className="w-full md:w-1/2 h-[300px] md:h-full relative z-10 flex items-center justify-center">
-          <div className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px]">
-            <ModelCanvas />
-          </div>
         </div>
       </section>
     </div>
