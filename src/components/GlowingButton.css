@@ -1,0 +1,16 @@
+.glow-button {
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, #6e00ff, #00bcd4);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 999px;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px #6e00ff;
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #6e00ff, 0 0 40px #00bcd4;
+}
