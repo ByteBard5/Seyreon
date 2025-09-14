@@ -1,4 +1,4 @@
-/*  Comment All
+/*  Contact Us Backend code, which is in the 'index.js right now
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");

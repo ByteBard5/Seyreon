@@ -5,11 +5,21 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Seyreon</title>
+
+    <!-- ✅ Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Poppins -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Orbitron for Hero Section -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- ✅ Google tag (gtag.js) -->
     <script
       async
@@ -21,9 +31,17 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-D06YTN40VS");
     </script>
+
+    <!-- ✅ Fix white flash -->
+    <style>
+      body {
+        margin: 0;
+        background: #0e0e0e; /* same as site bg */
+        color: white;
+      }
+    </style>
   </head>
   <body class="font-[Poppins]">
     <div id="root"></div>

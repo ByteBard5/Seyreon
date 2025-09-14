@@ -16,6 +16,7 @@ import "./components/GlowingButton.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import N8nChatWidget from "./components/N8nChatWidget";
+import PreLoader from "./components/PreLoader"; // 🔥 Added PreLoader
 
 // Pages
 import Home from "./Pages/Home/home";
@@ -57,6 +58,9 @@ const AppWrapper = () => {
   const location = useLocation();
   const [showHeaderFooter, setShowHeaderFooter] = useState(true);
 
+  // 🔥 New state for preloader
+  const [loading, setLoading] = useState(true);
+
   // ✅ Activate Lenis scroll
   useLenis();
 
@@ -66,42 +70,54 @@ const AppWrapper = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden bg-[#0e0e0e] relative">
-      <ScrollToTop />
-      {showHeaderFooter && <Header />}
-      <div className={showHeaderFooter ? "pt-20" : ""}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/ai-assistant" element={<AIAssistant />} />
-          <Route
-            path="/services/business-automation"
-            element={<BusinessAutomation />}
-          />
-          <Route path="/services/growth-engines" element={<GrowthEngines />} />
-          <Route path="/services/custom-systems" element={<CustomSystems />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<SingleBlog />} />
-          <Route path="/why-us" element={<WhyUs />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route
-            path="/terms-and-conditions"
-            element={<TermsAndConditions />}
-          />
+    <>
+      {loading ? (
+        <PreLoader onFinish={() => setLoading(false)} />
+      ) : (
+        <div className="min-h-screen text-white overflow-x-hidden bg-[#0e0e0e] relative">
+          <ScrollToTop />
+          {showHeaderFooter && <Header />}
+          <div className={showHeaderFooter ? "pt-20" : ""}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/ai-assistant" element={<AIAssistant />} />
+              <Route
+                path="/services/business-automation"
+                element={<BusinessAutomation />}
+              />
+              <Route
+                path="/services/growth-engines"
+                element={<GrowthEngines />}
+              />
+              <Route
+                path="/services/custom-systems"
+                element={<CustomSystems />}
+              />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<SingleBlog />} />
+              <Route path="/why-us" element={<WhyUs />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsAndConditions />}
+              />
 
-          {/* ✅ Client Portal Login */}
-          <Route path="/client-portal/login" element={<LoginPage />} />
-          <Route path="/portal/dashboard" element={<DashboardPage />} />
-        </Routes>
-      </div>
-      {showHeaderFooter && <Footer />}
+              {/* ✅ Client Portal Login */}
+              <Route path="/client-portal/login" element={<LoginPage />} />
+              <Route path="/portal/dashboard" element={<DashboardPage />} />
+            </Routes>
+          </div>
+          {showHeaderFooter && <Footer />}
 
-      {/* ✅ Chat widget always mounted */}
-      <N8nChatWidget />
-    </div>
+          {/* ✅ Chat widget always mounted */}
+          <N8nChatWidget />
+        </div>
+      )}
+    </>
   );
 };
 

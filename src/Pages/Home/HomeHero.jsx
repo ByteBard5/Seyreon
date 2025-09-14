@@ -5,12 +5,6 @@ import ModelCanvas from "./ModelCanvas";
 const HomeHero = () => {
   return (
     <div className="-mt-[100px] text-white bg-gradient-to-br from-[#0d0d14] via-[#13131d] to-[#1b1b29] relative overflow-hidden">
-      {/* Load Orbitron font */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap"
-        rel="stylesheet"
-      />
-
       <style>
         {`
           @keyframes softPulse {
