@@ -16,7 +16,8 @@ import "./components/GlowingButton.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import N8nChatWidget from "./components/N8nChatWidget";
-import PreLoader from "./components/PreLoader"; // 🔥 Added PreLoader
+import PreLoader from "./components/PreLoader"; // 🔥 PreLoader
+import MusicPlayer from "./components/MusicPlayer"; // 🎵 MusicPlayer
 
 // Pages
 import Home from "./Pages/Home/home";
@@ -58,7 +59,7 @@ const AppWrapper = () => {
   const location = useLocation();
   const [showHeaderFooter, setShowHeaderFooter] = useState(true);
 
-  // 🔥 New state for preloader
+  // 🔥 Preloader state
   const [loading, setLoading] = useState(true);
 
   // ✅ Activate Lenis scroll
@@ -115,6 +116,9 @@ const AppWrapper = () => {
 
           {/* ✅ Chat widget always mounted */}
           <N8nChatWidget />
+
+          {/* 🎵 Global Music Player */}
+          <MusicPlayer />
         </div>
       )}
     </>
