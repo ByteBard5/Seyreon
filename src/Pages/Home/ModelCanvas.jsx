@@ -29,6 +29,8 @@ const Model = () => {
           (child.name === "Mesh005" || child.name === "Mesh005_1")
         ) {
           child.material.color = new THREE.Color("#1565C0"); // deep bluish
+          child.material.transparent = true; // ✅ enable transparency
+          child.material.opacity = 0.8; // ✅ adjust as you like (0.0–1.0)
         }
 
         // Eyes (EyeBall, eyes)
