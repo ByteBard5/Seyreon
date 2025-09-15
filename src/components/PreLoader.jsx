@@ -145,13 +145,13 @@ export default function PreLoader({ onFinish }) {
     const d = `M ${leftX} 220 Q ${centerX} 0 ${rightX} 220`;
     setArcPath(d);
 
-    // --- Dynamic font size ---
+    // --- Dynamic font size (base before responsive classes) ---
     if (textLength < 20) {
       setFontSize(72);
     } else if (textLength < 35) {
       setFontSize(64);
     } else {
-      setFontSize(56);
+      setFontSize(52);
     }
 
     // --- Typing effect ---
@@ -179,7 +179,7 @@ export default function PreLoader({ onFinish }) {
   useEffect(() => {
     const handleMouseMove = (e) => {
       const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 20; // rotate range (-10 to +10)
+      const x = (e.clientX / innerWidth - 0.5) * 20;
       const y = (e.clientY / innerHeight - 0.5) * 20;
       setRotation({ x: y, y: -x });
     };
@@ -204,14 +204,17 @@ export default function PreLoader({ onFinish }) {
       }`}
     >
       {/* Curved Floating & Pulsing Text */}
-      <svg viewBox="0 0 1200 300" className="w-full max-w-7xl h-64 mb-6">
+      <svg
+        viewBox="0 0 1200 300"
+        className="w-full max-w-7xl h-40 sm:h-52 md:h-64 mb-6"
+      >
         <path id="curve" d={arcPath} fill="transparent" />
         <text
           fill="white"
           fontSize={fontSize}
           fontWeight="bold"
           textAnchor="middle"
-          className="animate-floatGlow"
+          className="animate-floatGlow text-[40px] sm:text-[52px] md:text-[64px] lg:text-[72px]"
         >
           <textPath href="#curve" startOffset="50%">
             {typedText}
@@ -221,7 +224,7 @@ export default function PreLoader({ onFinish }) {
 
       {/* CEO Cartoon Image with Parallax Tilt */}
       <div
-        className="relative w-64 sm:w-80 md:w-[26rem] transition-transform duration-200 ease-out"
+        className="relative w-56 sm:w-72 md:w-[22rem] lg:w-[26rem] transition-transform duration-200 ease-out"
         style={{
           transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
         }}
@@ -231,7 +234,6 @@ export default function PreLoader({ onFinish }) {
           alt="CEO Character"
           className="w-full h-auto"
         />
-        {/* Black gradient overlay at bottom */}
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent"></div>
       </div>
 
