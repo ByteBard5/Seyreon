@@ -31,6 +31,12 @@ const Model = () => {
           child.material.color = new THREE.Color("#1565C0"); // deep bluish
           child.material.transparent = true; // ✅ enable transparency
           child.material.opacity = 0.8; // ✅ adjust as you like (0.0–1.0)
+          child.material.roughness = 0.2;
+          child.material.metalness = 1.3;
+          child.material.thickness = 1.0;
+          child.material.clearcoatRoughness = 0.2;
+          child.material.clearcoat = 1.0;
+          child.material.reflectivity = 1.0;
         }
 
         // Eyes (EyeBall, eyes)
@@ -116,6 +122,7 @@ const ModelCanvas = () => {
     >
       {/* Lights */}
       <ambientLight intensity={0.9} />
+
       <directionalLight position={[5, 5, 5]} intensity={1.2} />
 
       {/* Model */}
@@ -126,7 +133,7 @@ const ModelCanvas = () => {
       {/* Glow */}
       <EffectComposer>
         <Bloom
-          intensity={1.5}
+          intensity={1.2}
           luminanceThreshold={0.2}
           luminanceSmoothing={0.9}
         />
