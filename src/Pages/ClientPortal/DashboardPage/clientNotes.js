@@ -35,7 +35,7 @@ export async function fetchClientNotes(clientId) {
 // ✅ Send new note to backend
 export async function appendClientNote(clientId, noteText) {
   try {
-    const response = await fetch(`/add-note`, {
+    const response = await fetch(`/api/add-note`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
