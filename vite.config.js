@@ -5,15 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/send-email": {
+      "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/send-email/, "/send-email"),
-      },
-      "/add-note": {
-        target: "http://localhost:5000",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/add-note/, "/add-note"),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

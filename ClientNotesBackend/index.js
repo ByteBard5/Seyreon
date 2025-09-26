@@ -4,8 +4,8 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const { google } = require("googleapis");
 
-console.log("📂 Loaded EMAIL_USER:", process.env.EMAIL_USER); // 👈 Debug log
-console.log("📂 Loaded GOOGLE_PROJECT_ID:", process.env.GOOGLE_PROJECT_ID); //Added for .env
+console.log("📂 Loaded EMAIL_USER:", process.env.EMAIL_USER);
+console.log("📂 Loaded GOOGLE_PROJECT_ID:", process.env.GOOGLE_PROJECT_ID);
 
 const app = express();
 app.use(cors());
@@ -77,7 +77,6 @@ const auth = new google.auth.GoogleAuth({
     private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   },
   projectId: process.env.GOOGLE_PROJECT_ID,
-  //keyFile: "service-account.json",
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
@@ -187,8 +186,9 @@ app.post("/add-note", async (req, res) => {
 });
 
 // ------------------ START SERVER ------------------
-app.listen(5000, () => {
-  console.log("🚀 Server running at http://localhost:5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running at http://0.0.0.0:${PORT}`);
   console.log(
     "📌 Available routes: GET /test, POST /send-email, POST /add-note"
   );
